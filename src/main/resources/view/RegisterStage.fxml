@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cloud.moonnetty.controller.RegisterStageController">
+   <children>
+      <Label alignment="CENTER" layoutX="257.0" layoutY="75.0" prefHeight="15.0" prefWidth="74.0" text="用户注册" />
+      <Label layoutX="172.0" layoutY="114.0" text="用户名：" />
+      <Label alignment="CENTER_RIGHT" layoutX="172.0" layoutY="163.0" text="密  码：" />
+      <PasswordField fx:id="confirmPassword" layoutX="237.0" layoutY="209.0" prefHeight="23.0" prefWidth="192.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="164.0" layoutY="213.0" text="确认密码：" />
+      <TextField fx:id="name" layoutX="237.0" layoutY="110.0" prefHeight="23.0" prefWidth="192.0" />
+      <PasswordField fx:id="password" layoutX="235.0" layoutY="159.0" prefHeight="23.0" prefWidth="192.0" />
+      <Button fx:id="submit" layoutX="237.0" layoutY="255.0" mnemonicParsing="false" text="确认" onAction="#submit"/>
+      <Button fx:id="cancel" layoutX="369.0" layoutY="255.0" mnemonicParsing="false" text="取消" />
+      <Label fx:id="showErrorMessage" layoutX="235.0" layoutY="237.0" prefHeight="9.0" prefWidth="192.0" />
+   </children>
+</AnchorPane>
