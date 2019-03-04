@@ -1,4 +1,4 @@
-package com.chat.chatnetty.common;
+package com.chat.common;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

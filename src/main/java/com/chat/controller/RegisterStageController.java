@@ -1,4 +1,4 @@
-package com.chat.chatnetty.controller;
+package com.chat.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.springframework.util.StringUtils;
 
-public class RegisterStageController extends Stage {
+public class RegisterStageController{
     @FXML
     private Button submit;
     @FXML

@@ -1,5 +1,6 @@
-package com.chat.chatnetty.client;
+package com.chat.client;
 
+import com.alibaba.fastjson.JSONObject;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -25,9 +26,9 @@ public class NettyClient {
     private static Bootstrap b;
     private static ChannelFuture f;
     private static final EventLoopGroup WORKER_GROUP = new NioEventLoopGroup();
-    private static Channel channel = null;
+    public static Channel channel = null;
 
-    static  {
+    static {
         log.info("init...");
         b = new Bootstrap();
         b.group(WORKER_GROUP);
@@ -44,22 +45,26 @@ public class NettyClient {
         });
     }
 
-    static void start(InetSocketAddress address) throws InterruptedException {
+    /**
+     * 启动客户端
+     *
+     * @param address
+     */
+    public static void start(InetSocketAddress address) {
         f = b.connect(address);
         f.addListener((ChannelFutureListener) channelFuture -> {
             if (f.isSuccess()) {
                 channel = f.channel();
+                //auth 发送个人信息
+                JSONObject auth = new JSONObject();
+                auth.put("userId", "");
+                auth.put("type", "0");
+                channel.writeAndFlush(auth.toJSONString());
                 log.info("Connect to server successfully!");
                 return;
             } else {
                 log.info("Failed to connect to server, try connect after 5s");
-                f.channel().eventLoop().schedule(() -> {
-                    try {
-                        start( new InetSocketAddress("127.0.0.1", 9527));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }, 5, TimeUnit.SECONDS);
+                f.channel().eventLoop().schedule(() -> start(new InetSocketAddress("127.0.0.1", 9527)), 5, TimeUnit.SECONDS);
             }
         });
     }
@@ -69,12 +74,12 @@ public class NettyClient {
         InetSocketAddress address = new InetSocketAddress("127.0.0.1", 9527);
         try {
             start(address);
-            while (true){
+            while (true) {
                 System.out.print("say something:");
                 Scanner scanner = new Scanner(System.in);
                 String s = scanner.nextLine();
-                if(!StringUtils.isEmpty(s)){
-                    if(channel!=null){
+                if (!StringUtils.isEmpty(s)) {
+                    if (channel != null) {
                         channel.writeAndFlush(s).sync();
                     }
                 }

@@ -1,7 +1,8 @@
-package com.chat.chatnetty;
+package com.chat;
 
-import com.chat.chatnetty.common.StageContext;
-import com.chat.chatnetty.view.LoginStageView;
+import com.chat.client.NettyClient;
+import com.chat.common.StageContext;
+import com.chat.view.LoginStageView;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,10 +14,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
+import java.net.InetSocketAddress;
 
 /**
  * @author y19477
@@ -45,6 +46,7 @@ public class ChatNettyApplication extends AbstractJavaFxApplicationSupport {
         stage.setScene(scene);
         stage.show();
         StageContext.stageManager.addStage("loginStage",stage);
+        NettyClient.start(new InetSocketAddress("127.0.0.1", 9527));
     }
 
     @Override

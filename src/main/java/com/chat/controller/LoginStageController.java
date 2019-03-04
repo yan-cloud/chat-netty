@@ -1,6 +1,6 @@
-package com.chat.chatnetty.controller;
+package com.chat.controller;
 
-import com.chat.chatnetty.common.StageContext;
+import com.chat.common.StageContext;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
  * @author y19477
  * 登录界面处理类
  */
-@Component
 public class LoginStageController implements Initializable {
 
     private Logger log = LoggerFactory.getLogger(LoginStageController.class);
@@ -45,10 +44,14 @@ public class LoginStageController implements Initializable {
     }
 
     @FXML
-    public void login() {
+    public void login() throws IOException {
         String name = username.getText().trim();
         String password = passwd.getText().trim();
         log.info("登录的用户名：{},密码：{}",name,password);
+        Stage chatStage = StageContext.factory.createStage("会话", 600, 400, "view/ChatStage.fxml");
+        Stage loginStage = StageContext.stageManager.getStage("loginStage");
+        loginStage.close();
+        chatStage.show();
     }
     @FXML
     public void cancel() {

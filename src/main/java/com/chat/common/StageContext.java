@@ -1,4 +1,4 @@
-package com.chat.chatnetty.common;
+package com.chat.common;
 
 /**
  * stages上下文

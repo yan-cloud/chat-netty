@@ -41,6 +41,26 @@
             <artifactId>springboot-javafx-support</artifactId>
             <version>2.1.6</version>
         </dependency>
+
+        <!--mybatis-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.51</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -51,5 +71,7 @@
             </plugin>
         </plugins>
     </build>
-
+    <modules>
+        <module>chat-server</module>
+    </modules>
 </project>

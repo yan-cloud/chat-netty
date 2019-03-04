@@ -1,4 +1,4 @@
-package com.chat.chatnetty;
+package com.chat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

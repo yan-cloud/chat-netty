@@ -1,4 +1,4 @@
-package com.chat.chatnetty.client;
+package com.chat.client;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -28,12 +28,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         //使用过程中断线重连
         ctx.channel().eventLoop().schedule(() -> {
-            try {
-                log.info("reconnection to 127.0.0.1:9527");
-                NettyClient.start( new InetSocketAddress("127.0.0.1", 9527));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            log.info("reconnection to 127.0.0.1:9527");
+            NettyClient.start( new InetSocketAddress("127.0.0.1", 9527));
         }, 5, TimeUnit.SECONDS);
     }
 

@@ -1,4 +1,4 @@
-package com.chat.chatnetty.view;
+package com.chat.view;
 
 import de.felixroske.jfxsupport.AbstractFxmlView;
 import de.felixroske.jfxsupport.FXMLView;
