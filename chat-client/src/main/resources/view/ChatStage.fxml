@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chat.client.controller.ChatStageController">
+   <children>
+      <TextArea fx:id="message" disable="true" layoutX="104.0" layoutY="14.0" prefHeight="210.0" prefWidth="467.0" />
+      <TextArea fx:id="say" layoutX="104.0" layoutY="247.0" prefHeight="101.0" prefWidth="467.0" onKeyPressed="#onKeyPress"/>
+      <Button fx:id="send" layoutX="514.0" layoutY="356.0" mnemonicParsing="false" onAction="#send" prefHeight="23.0" prefWidth="57.0" text="发送" />
+   </children>
+</AnchorPane>
