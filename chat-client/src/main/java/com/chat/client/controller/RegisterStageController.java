@@ -1,5 +1,6 @@
 package com.chat.client.controller;
 
+import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import org.springframework.util.StringUtils;
 
+@FXMLController
 public class RegisterStageController{
     @FXML
     private Button submit;

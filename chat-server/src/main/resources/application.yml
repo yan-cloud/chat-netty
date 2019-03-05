@@ -1,6 +1,6 @@
 netty:
   port: 9527
-  url: 127.0.0.1
+  host: 127.0.0.1
 
 spring:
   datasource:

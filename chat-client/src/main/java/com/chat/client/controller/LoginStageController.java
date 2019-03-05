@@ -1,6 +1,10 @@
 package com.chat.client.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.chat.client.client.NettyClient;
 import com.chat.client.common.StageContext;
+import de.felixroske.jfxsupport.FXMLController;
+import io.netty.channel.Channel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,9 +19,11 @@ import java.util.ResourceBundle;
 
 
 /**
- * @author y19477
+ * @author ywd
  * 登录界面处理类
  */
+
+@FXMLController
 public class LoginStageController implements Initializable {
 
     private Logger log = LoggerFactory.getLogger(LoginStageController.class);
@@ -46,12 +52,22 @@ public class LoginStageController implements Initializable {
     public void login() throws IOException {
         String name = username.getText().trim();
         String password = passwd.getText().trim();
-        log.info("登录的用户名：{},密码：{}",name,password);
+        log.info("登录的用户名：{},密码：{}", name, password);
         Stage chatStage = StageContext.factory.createStage("会话", 600, 400, "view/ChatStage.fxml");
         Stage loginStage = StageContext.stageManager.getStage("loginStage");
         loginStage.close();
         chatStage.show();
+        Channel channel = NettyClient.channel;
+        //TODO 通过HTTP请求获取用户登录信息以及授权信息
+        //tcp鉴权 发送个人信息
+        JSONObject auth = new JSONObject();
+        auth.put("userId", name);
+        auth.put("type", "0");
+        if (channel != null && channel.isActive()) {
+            channel.writeAndFlush(auth.toJSONString());
+        }
     }
+
     @FXML
     public void cancel() {
         username.setText(null);

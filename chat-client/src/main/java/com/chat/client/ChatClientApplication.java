@@ -14,14 +14,23 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.springframework.boot.SpringApplication;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
 import java.net.InetSocketAddress;
 
+/**
+ * @author ywd
+ */
 @SpringBootApplication
 public class ChatClientApplication extends AbstractJavaFxApplicationSupport {
+
+    @Value("${netty.port}")
+    private int port;
+
+    @Value("${netty.host}")
+    private String host;
 
     public static void main(String[] args) {
         launch(ChatClientApplication.class, LoginStageView.class, args);
@@ -35,14 +44,18 @@ public class ChatClientApplication extends AbstractJavaFxApplicationSupport {
         Scene scene = new Scene(content);
         stage.setResizable(false);
         stage.initStyle(StageStyle.UTILITY);
-        stage.setTitle("聊天");
+        stage.setTitle("登录");
         Pane pane = new Pane();
         ImageView splashImage = new ImageView(new Image(new File("/image/icon.jpg").toURI().toString()));
         splashImage.setEffect(new DropShadow(4, Color.GREY));
         pane.getChildren().add(splashImage);
         stage.setScene(scene);
         stage.show();
-        StageContext.stageManager.addStage("loginStage",stage);
+        stage.setOnCloseRequest(event -> {
+            //此处当stage关闭时，同时结束程序，避免stage关闭后，程序界面关闭了，但后台线程却依然运行的问题
+            System.exit(0);
+        });
+        StageContext.stageManager.addStage("loginStage", stage);
         NettyClient.start(new InetSocketAddress("127.0.0.1", 9527));
     }
 

@@ -12,7 +12,7 @@ import java.net.URL;
 
 /**
  * stage管理类实体
- * @author y19477
+ * @author ywd
  */
 
 public class StageFactory {

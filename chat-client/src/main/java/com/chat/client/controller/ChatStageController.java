@@ -2,6 +2,7 @@ package com.chat.client.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chat.client.client.NettyClient;
+import de.felixroske.jfxsupport.FXMLController;
 import io.netty.channel.Channel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +15,8 @@ import java.net.InetSocketAddress;
 /**
  * 聊天界面
  */
+
+@FXMLController
 public class ChatStageController {
 
     @FXML

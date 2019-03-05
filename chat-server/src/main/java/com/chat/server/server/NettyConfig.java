@@ -16,7 +16,7 @@ import java.net.InetSocketAddress;
 
 /**
  * netty server启动
- * @author y19477
+ * @author ywd
  */
 @Configuration
 public class NettyConfig {
@@ -31,8 +31,8 @@ public class NettyConfig {
     @Value("${netty.port}")
     private int port;
 
-    @Value("${netty.url}")
-    private String url;
+    @Value("${netty.host}")
+    private String host;
 
     @Bean
     public ChannelFuture run(InetSocketAddress address) {
@@ -62,6 +62,6 @@ public class NettyConfig {
 
     @Bean
     public InetSocketAddress address(){
-        return new InetSocketAddress(url,port);
+        return new InetSocketAddress(host,port);
     }
 }

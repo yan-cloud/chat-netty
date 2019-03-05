@@ -1,6 +1,7 @@
 package com.chat.server.server;
 
 import com.alibaba.fastjson.JSONObject;
+import com.chat.server.common.MessageType;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -12,20 +13,21 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @author y19477
+ * @author ywd
  */
 public class ServerHandle extends SimpleChannelInboundHandler<Object> {
     public static final Map<String, Channel> CLIENTS = new ConcurrentHashMap<>();
     private Logger log = LoggerFactory.getLogger(ServerHandle.class);
+
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o) {
         JSONObject message = (JSONObject)JSONObject.parse((String)o);
         String type = message.getString("type");
-        if("0".equals(type)){
+        if(MessageType.AUTH.equals(type)){
             //auth  鉴权
             log.info("{},鉴权成功",message.getString("userId"));
             CLIENTS.put(message.getString("userId"),channelHandlerContext.channel());
-        }else if("1".equals(type)){
+        }else if(MessageType.MESSAGE.equals(type)){
             Channel sendTo = CLIENTS.get(message.getString("to"));
             if(sendTo.isActive()){
                 sendTo.writeAndFlush(message.getString("message"));
