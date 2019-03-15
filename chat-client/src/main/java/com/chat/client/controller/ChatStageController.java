@@ -9,8 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
+import org.springframework.scheduling.annotation.Async;
 
-import java.net.InetSocketAddress;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 聊天界面
@@ -18,6 +20,7 @@ import java.net.InetSocketAddress;
 
 @FXMLController
 public class ChatStageController {
+
 
     @FXML
     TextArea message;
@@ -28,45 +31,49 @@ public class ChatStageController {
     @FXML
     Button send;
 
+    ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    public void onKeyPress(){
+    public void onKeyPress() {
         say.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER)  {
-                try {
-                    sendMessage();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                String sendMessage = say.getText().trim();
+                message.appendText("I say:" + sendMessage + "\r\n");
+                message.setFont(new Font("Black", 16));
+                message.setScrollLeft(1);
+                sendMessage(sendMessage);
+                say.clear();
             }
         });
-        say.clear();
     }
 
     /**
      * 消息发送
      */
     public void send() throws InterruptedException {
-        sendMessage();
+        String sendMessage = say.getText().trim();
+        sendMessage(sendMessage);
+        message.appendText("I say:" + sendMessage + "\r\n");
+        message.setFont(new Font("Black", 16));
+        message.setScrollLeft(1);
+        say.clear();
     }
 
-    private void sendMessage() throws InterruptedException {
-        String sendMessage = say.getText().trim();
-        Channel channel = NettyClient.channel;
-        message.appendText("I say:" + sendMessage+"\r\n");
-        message.setFont(new Font("Black",16));
-        message.setScrollLeft(1);
-        if (channel == null || !channel.isActive()) {
-            NettyClient.start(new InetSocketAddress("127.0.0.1", 9527));
-            Thread.sleep(10000);
-        }
-        JSONObject object = new JSONObject();
-        object.put("message",sendMessage);
-        object.put("to","");
-        object.put("from","");
-        object.put("type","1");
-        String s = object.toJSONString();
-        channel.writeAndFlush(s+"\r\n");
-        say.clear();
+    @Async
+    public void sendMessage(String sendMessage) {
+        executorService.submit(() -> {
+            Channel channel = NettyClient.channel;
+            while (channel != null || channel.isActive()) {
+                JSONObject object = new JSONObject();
+                object.put("message", sendMessage);
+                object.put("to", "");
+                object.put("from", "");
+                object.put("type", "1");
+                String s = object.toJSONString();
+                channel.writeAndFlush(s + "\r\n");
+            }
+
+        });
+
     }
 
 

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.io.File;
 import java.net.InetSocketAddress;
@@ -24,6 +25,7 @@ import java.net.InetSocketAddress;
  * @author ywd
  */
 @SpringBootApplication
+@EnableAsync
 public class ChatClientApplication extends AbstractJavaFxApplicationSupport {
 
     @Value("${netty.port}")
